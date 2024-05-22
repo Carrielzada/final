@@ -1,17 +1,11 @@
 
 import './App.css';
-import SideBar from './Componentes/SiderBar/SideBar';
-import FormColab from './Componentes/FormColab/FormColab';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="App">
-      <SideBar/>
-      <div className='container-fluid'>
-        <div className='container'>
-          <FormColab/>
-        </div>
-      </div>
+    <div className='App'>
+
     </div>
   );
 }
