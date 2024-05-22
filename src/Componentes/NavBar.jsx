@@ -32,10 +32,25 @@ function NavBar() {
                             <span className="mx-2">Home</span>
                         </Link>
                     </li>
+                    <li className='nav-link'>
+                        <Link to="/AgendarServicos">
+                        <FaClipboard />
+                        <span className="mx-2">Agendar Serviços</span></Link>
+                    </li>
+                    <li className='nav-link'>
+                        <Link to="/PersonalizarAgendamentos">
+                        <FaClipboard />
+                        <span className="mx-2">Visualizar Agendamentos</span></Link>
+                    </li>
+                    <li className='nav-link'>
+                        <Link to="/VisualizarAgendamentos">
+                        <FaClipboard />
+                        <span className="mx-2">Personalizar Agendamento</span></Link>
+                    </li>
                     <li className="nav-link">
                         <Link to="/AtivSustentaveis">
                             <FaClipboard />
-                            <span className="mx-2">Cadastro Ativ. Sustentável</span>
+                            <span className="mx-2">Cadastrar Ativ. Sustentável</span>
                         </Link>
                     </li>
                     <li className="nav-link">
@@ -47,25 +62,8 @@ function NavBar() {
                     <li className="nav-link">
                         <Link to="/Colaboradores">
                             <FaClipboard />
-                            <span className="mx-2">Cadastro Colaboradores</span>
+                            <span className="mx-2">Cadastro de Colaboradores</span>
                         </Link>
-                    </li>
-                    <li className="nav-link">
-                        <Link to="/InfoAtiv">
-                            <FaClipboard />
-                            <span className="mx-2">Registrar Informações do Serviço</span>
-                        </Link>
-                    </li>
-                    <li className='nav-link'>
-                        <Link to="/AgendarServicos">
-                            <span id='pagina'>Agendar Serviços</span></Link>
-                    </li>
-                    <li className='nav-link'>
-                        <Link to="/PersonalizarAgendamentos">
-                            <span id='pagina'>Personalizar Agendamento</span></Link>
-                    </li>
-                    <li className='nav-link'>
-                        <Link to="/VisualizarAgendamentos"><span id='pagina'>Visualizar Agendamentos</span></Link>
                     </li>
                 </ul>
             </div>

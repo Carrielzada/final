@@ -4,7 +4,6 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 import './index.css';
 import App from './App';
 import CadAtivSust from './Paginas/AtivSustentaveis/CadAtivSust';
-import InfoAtiv from './Paginas/InfoAtiv/InfoAtiv';
 import AgendarServicos from './Paginas/Agendar/AgendarServicos';
 import VisualizarAgendamentos from './Paginas/Agendar/VisualizarAgendamentos';
 import PersonalizarAgendamentos from './Paginas/Agendar/PersonalizarAgendamentos';
@@ -13,7 +12,6 @@ import FormColab from './Paginas/Colaboradores/FormColab';
 import reportWebVitals from './reportWebVitals';
 import NavBar from './Componentes/NavBar';
 import Home from './Componentes/Home';
-
 
 const router = createBrowserRouter(
   [
@@ -45,9 +43,9 @@ const router = createBrowserRouter(
           path:'/Colaboradores',
           element:<FormColab></FormColab>
         },
-        {
-          path:'/InfoAtiv',
-          element:<InfoAtiv></InfoAtiv>
+        {         
+          path:'/colaboradores/:idColaborador',
+          element:<FormColab></FormColab>       
         },
         {
           path: '/AgendarServicos',

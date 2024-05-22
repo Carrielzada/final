@@ -543,7 +543,6 @@ function FormColab() {
                                     <td>{colaborador.anosExperiencia}</td>
                                     <td>{colaborador.nivelEscolaridade}</td>
                                     <td>
-                                        <Link className='btn btn-primary btn-sm m-1'> <FaEdit></FaEdit>Editar</Link>
                                         <Button className='btn btn-danger btn-sm' onClick={() => handleExcluir(colaborador.id)} > <FaTrashAlt></FaTrashAlt>Excluir</Button>
                                     </td>
                                 </tr>
