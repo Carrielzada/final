@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
 import { Button, Col, Form, Row, Container, Table, Alert } from 'react-bootstrap';
-import { FaCheckCircle, FaEdit, FaTrashAlt, FaListAlt } from 'react-icons/fa'
+import { FaCheckCircle, FaTrashAlt, FaListAlt } from 'react-icons/fa'
 import { useEffect, useState } from 'react';
 
 import './formcolab.css'
@@ -316,7 +315,7 @@ function FormColab() {
                                     <Form.Label>Contato</Form.Label>
                                     <Col className="input-group mb-3">
                                         <Form.Control
-                                            type="text" // Alterado para "text" para permitir formatação
+                                            type="text" 
                                             className="form-control"
                                             placeholder="(XX) XXXXX-XXXX"
                                             aria-label="Recipient's username"

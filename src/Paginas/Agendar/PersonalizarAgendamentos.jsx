@@ -22,7 +22,6 @@ function PersonalizarAgendamentos() {
     }
 
     return (
-        
         <Container className="container">
             <Card className="mt-4"> 
                 <h1 id="titulo">Visualizar Agendamento</h1>

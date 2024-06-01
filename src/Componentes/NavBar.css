@@ -1,6 +1,6 @@
 /* NavBar.css */
 .side-navbar {
-    width: 250px;
+    width: 255px;
     height: 100vh;
     position: fixed;
     margin-left: -300px;
@@ -23,7 +23,7 @@
 }
 
 .active-cont {
-    margin-left: 250px;
+    margin-left: 255px;
 }
 
 #menu-btn {
@@ -55,4 +55,5 @@
 
 .main-container {
     max-width: 97%;
+    margin-left: 20px;
 }

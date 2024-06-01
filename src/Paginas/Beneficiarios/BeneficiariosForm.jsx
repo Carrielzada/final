@@ -1,28 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import InputMask from "react-input-mask";
 
-const BeneficiariosForm = () => {
+const BeneficiariosForm = ({ selectedBeneficiary }) => {
   const [validated, setValidated] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const [formData, setFormData] = useState({
+    id: "",
+    nome: "",
+    cpf: "",
+    contato: "",
+    endereco: "",
+    bairro: "",
+    numero: "",
+    dataNascimento: "",
+  });
+
+  useEffect(() => {
+    if (selectedBeneficiary) {
+      setFormData(selectedBeneficiary);
+    }
+  }, [selectedBeneficiary]);
+
   const handleSubmit = (event, message) => {
     const form = event.currentTarget;
-    event.preventDefault(); // Prevenir o comportamento padrão de envio do formulário
+    event.preventDefault();
 
-    // Verificar se o formulário é válido
     if (form.checkValidity() === false) {
       event.stopPropagation();
       setErrorMessage("Por favor, preencha todos os campos obrigatórios.");
       setValidated(true);
-      setTimeout(() => setErrorMessage(""), 3000); // Remover a mensagem de erro após 3 segundos
+      setTimeout(() => setErrorMessage(""), 3000);
     } else {
-      // Limpar mensagem de erro e exibir mensagem de sucesso
       setErrorMessage("");
       setSuccessMessage(message);
       setValidated(true);
-      setTimeout(() => setSuccessMessage(""), 3000); // Remover a mensagem de sucesso após 3 segundos
+      setTimeout(() => setSuccessMessage(""), 3000);
     }
   };
 
@@ -32,7 +47,7 @@ const BeneficiariosForm = () => {
         <Row className="mb-3 justify-content-center">
           <Form.Group as={Col} xs={12} md={6} lg={3} controlId="validationCustom01">
             <Form.Label>ID</Form.Label>
-            <InputMask mask="999999" maskChar=" ">
+            <InputMask mask="999999" maskChar=" " value={formData.id} onChange={(e) => setFormData({ ...formData, id: e.target.value })}>
               {(inputProps) => (
                 <Form.Control
                   {...inputProps}
@@ -52,7 +67,8 @@ const BeneficiariosForm = () => {
               required
               type="text"
               placeholder="Nome"
-              defaultValue=""
+              value={formData.nome}
+              onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
             />
             <Form.Control.Feedback type="invalid">
               Por favor, insira um nome válido.
@@ -60,7 +76,7 @@ const BeneficiariosForm = () => {
           </Form.Group>
           <Form.Group as={Col} xs={12} md={6} lg={3} controlId="validationCustomUsername">
             <Form.Label>CPF</Form.Label>
-            <InputMask mask="999.999.999-99" maskChar=" ">
+            <InputMask mask="999.999.999-99" maskChar=" " value={formData.cpf} onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}>
               {(inputProps) => (
                 <Form.Control {...inputProps} type="text" placeholder="CPF" required />
               )}
@@ -71,9 +87,9 @@ const BeneficiariosForm = () => {
           </Form.Group>
           <Form.Group as={Col} xs={12} md={6} lg={3} controlId="validationCustom03">
             <Form.Label>Contato</Form.Label>
-            <InputMask mask="(99) 99999-9999" maskChar=" ">
+            <InputMask mask="(99) 99999-9999" maskChar=" " value={formData.contato} onChange={(e) => setFormData({ ...formData, contato: e.target.value })}>
               {(inputProps) => (
-                <Form.Control {...inputProps} type="text" placeholder="Contato" required />
+                <Form.Control {...inputProps} type="text" placeholder="(xx)xxxxx-xxxx)" required />
               )}
             </InputMask>
             <Form.Control.Feedback type="invalid">
@@ -84,21 +100,33 @@ const BeneficiariosForm = () => {
         <Row className="mb-3 justify-content-center">
           <Form.Group as={Col} xs={12} md={6} lg={3} controlId="validationCustom04">
             <Form.Label>Endereço</Form.Label>
-            <Form.Control type="text" placeholder="Endereço" required />
+            <Form.Control
+              type="text"
+              placeholder="Endereço"
+              required
+              value={formData.endereco}
+              onChange={(e) => setFormData({ ...formData, endereco: e.target.value })}
+            />
             <Form.Control.Feedback type="invalid">
               Por favor, insira um endereço válido.
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group as={Col} xs={12} md={6} lg={3} controlId="validationCustom05">
             <Form.Label>Bairro</Form.Label>
-            <Form.Control type="text" placeholder="Bairro" required />
+            <Form.Control
+              type="text"
+              placeholder="Bairro"
+              required
+              value={formData.bairro}
+              onChange={(e) => setFormData({ ...formData, bairro: e.target.value })}
+            />
             <Form.Control.Feedback type="invalid">
               Por favor, insira um bairro válido.
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group as={Col} xs={12} md={6} lg={3} controlId="validationCustom06">
             <Form.Label>Número</Form.Label>
-            <InputMask mask="99999" maskChar=" ">
+            <InputMask mask="99999" maskChar=" " value={formData.numero} onChange={(e) => setFormData({ ...formData, numero: e.target.value })}>
               {(inputProps) => (
                 <Form.Control {...inputProps} type="text" placeholder="Número" required />
               )}
@@ -109,7 +137,7 @@ const BeneficiariosForm = () => {
           </Form.Group>
           <Form.Group as={Col} xs={12} md={6} lg={3} controlId="validationCustom07">
             <Form.Label>Data de Nascimento</Form.Label>
-            <InputMask mask="99/99/9999" maskChar=" ">
+            <InputMask mask="99/99/9999" maskChar=" " value={formData.dataNascimento} onChange={(e) => setFormData({ ...formData, dataNascimento: e.target.value })}>
               {(inputProps) => (
                 <Form.Control {...inputProps} type="text" placeholder="Data de nascimento" required />
               )}

@@ -1,7 +1,7 @@
-import { Container, Card, Row, Col, Table } from "react-bootstrap";
+import { useState } from "react";
+import { Container, Card, Row, Col, Table, Button } from "react-bootstrap";
 import { FaListAlt } from "react-icons/fa";
 import BeneficiariosForm from './BeneficiariosForm';
-import './Beneficiarios.css'
 
 function Beneficiarios() {
   const prefilledBeneficiaries = [
@@ -75,26 +75,33 @@ function Beneficiarios() {
       numero: "210",
       dataNascimento: "07/07/1995",
     },
-   
   ];
+
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState(null);
+
+  const handleFillForm = (beneficiary) => {
+    setSelectedBeneficiary(beneficiary);
+  };
 
   return (
     <>
-      <h2 className="text-center mb-4"><FaListAlt /> CADASTRO DE BENEFICIÁRIOS</h2>
+      <h2 className="text-center mt-4">
+        <FaListAlt /> Gerenciar Beneficiários
+      </h2>
       <Container>
         <Card>
-          <Card.Header><h3>Cadastro Beneficiários</h3></Card.Header>
+          <Card.Header>Cadastro Beneficiários</Card.Header>
           <Card.Body>
             <Row>
               <Col>
-                <BeneficiariosForm/>
+                <BeneficiariosForm selectedBeneficiary={selectedBeneficiary} />
               </Col>
             </Row>
           </Card.Body>
         </Card>
       </Container>
       <hr />
-      <h3 className="text-left ms-2">Beneficiários Cadastrados</h3>
+      <h3 className="text-center">Beneficiários Cadastrados</h3>
       <Container>
         <Table striped bordered hover className="mt-3">
           <thead>
@@ -107,6 +114,7 @@ function Beneficiarios() {
               <th>Bairro</th>
               <th>Número</th>
               <th>Data de Nascimento</th>
+              <th>Ação</th>
             </tr>
           </thead>
           <tbody>
@@ -120,6 +128,15 @@ function Beneficiarios() {
                 <td>{beneficiary.bairro}</td>
                 <td>{beneficiary.numero}</td>
                 <td>{beneficiary.dataNascimento}</td>
+                <td>
+                 
+                <Button
+                    variant="info"
+                    onClick={() => handleFillForm(beneficiary)}
+                  >
+                    <i className="bi bi-arrow-up-circle"></i>
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
