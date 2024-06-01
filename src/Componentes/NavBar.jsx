@@ -65,6 +65,12 @@ function NavBar() {
                             <span className="mx-2">Cadastro de Colaboradores</span>
                         </Link>
                     </li>
+                    <li className="nav-link px-2 py-3">
+                        <Link to="/Maquinario">
+                            <FaClipboard />
+                            <span className="mx-2">Cadastro de Maquinário</span>
+                        </Link>
+                    </li>
                 </ul>
             </div>
 

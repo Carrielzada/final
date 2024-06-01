@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 
 import './formcolab.css'
 
-
 function FormColab() {
     const [showMensagem, setshowMensagem] = useState(false)
     const [validated, setValidated] = useState(false);
@@ -28,7 +27,6 @@ function FormColab() {
         if (listaSalva != null) {
             setListaColaboradores(JSON.parse(listaSalva))
         }
-
     }, [])
 
     const handleExcluir = (id) => {
@@ -162,8 +160,6 @@ function FormColab() {
     const handleNivelEscolaridadeChange = (event) => {
         setNivelEscolaridade(event.target.value);
     };
-
-
 
     function handleSalvar(event) {
         event.preventDefault();
@@ -559,6 +555,5 @@ function FormColab() {
 
     );
 }
-
 export default FormColab;
 

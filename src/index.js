@@ -9,6 +9,7 @@ import VisualizarAgendamentos from './Paginas/Agendar/VisualizarAgendamentos';
 import PersonalizarAgendamentos from './Paginas/Agendar/PersonalizarAgendamentos';
 import Beneficiarios from './Paginas/Beneficiarios/Beneficiarios';
 import FormColab from './Paginas/Colaboradores/FormColab';
+import Maquinario from './Paginas/Maquinario/Maquinario'
 import reportWebVitals from './reportWebVitals';
 import NavBar from './Componentes/NavBar';
 import Home from './Componentes/Home';
@@ -58,6 +59,10 @@ const router = createBrowserRouter(
         {
           path: '/PersonalizarAgendamentos',
           element: <PersonalizarAgendamentos></PersonalizarAgendamentos>
+        },
+        {
+          path: '/Maquinario',
+          element: <Maquinario></Maquinario>
         }
       ]
     }
