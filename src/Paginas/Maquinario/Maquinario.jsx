@@ -10,7 +10,7 @@ function Maquinario() {
     const [ano, setAno] = useState("");
 
     const [errors, setErrors] = useState({});
-
+    const [showAlertExcluir, setShowAlertExcluir] = useState(false);
     const [listaMaquinario, setListaMaquinario] = useState([]);
 
     useEffect(() => {
@@ -18,13 +18,20 @@ function Maquinario() {
         if (listaSalva != null) {
             setListaMaquinario(JSON.parse(listaSalva))
         }
-    }, [])
+    }, []);
+
     const handleExcluir = (id) => {
-        const novoMaquinario = listaMaquinario.filter(maquinario => maquinario.id !== id);
-        setListaMaquinario(novoMaquinario);
-        localStorage.setItem('maquinario', JSON.stringify(novoMaquinario))
-    }
-    const hadleModelo= (e) => {
+        setShowAlertExcluir(true); // Exibir a mensagem de aviso
+      
+        setTimeout(() => {
+          const novoMaquinario = listaMaquinario.filter((maquinario) => maquinario.id !== id);
+          setListaMaquinario(novoMaquinario);
+          localStorage.setItem('maquinario', JSON.stringify(novoMaquinario));
+          setShowAlertExcluir(false); // Ocultar a mensagem de aviso após a exclusão
+        }, 2000); // Aguardar 2 segundos antes de excluir o cadastro
+      };
+
+    const handleModelo= (e) => {
         const value = e.target.value;
         setModelo(value);
         if (value && value.length <= 50) {
@@ -38,21 +45,20 @@ function Maquinario() {
             }
         }
     };
-    const hadlePlaca= (e) => {
+    const handlePlaca = (e) => {
         const value = e.target.value;
         setPlaca(value);
         if (value && value.length <= 50) {
-            setErrors((prev) => ({ ...prev, placa: null }));
+          setErrors((prev) => ({ ...prev, placa: null }));
         } else {
-
-            if (value === "") {
-                setErrors((prev) => ({ ...prev, placa: 'O campo não pode estar vazio.' }));
-            } else {
-                setErrors((prev) => ({ ...prev, placa: 'O campo não aceita mais de 50 caracteres.' }));
-            }
+          if (value === "") {
+            setErrors((prev) => ({ ...prev, placa: 'O campo não pode estar vazio.' }));
+          } else {
+            setErrors((prev) => ({ ...prev, placa: 'O campo não aceita mais de 50 caracteres.' }));
+          }
         }
-    };
-    const hadleAno= (e) => {
+      };
+    const handleAno= (e) => {
         const value = e.target.value;
         setAno(value);
         if (value && value.length <= 50) {
@@ -73,7 +79,8 @@ function Maquinario() {
         let newErros = {};
 
         if (form.checkValidity() === false) {
-            event.stopPropagation()
+            event.stopPropagation();
+            setValidated(true);
         }
         if (!modelo) {
             newErros.modelo = 'O campo não pode estar vazio.'
@@ -94,26 +101,26 @@ function Maquinario() {
         }
 
         if (Object.keys(newErros).length > 0) {
-
-            setErrors(newErros)
-        } else {
-            const colaborador = {
-                id: 0,
-                modelo: form.modelo.value,
-                placa: form.placa.value,
-                ano: form.ano.value,
-            }
-
+            setErrors(newErros);
+          } else {
             const listaSalva = localStorage.getItem('maquinario');
-            const maquinario = listaSalva == null ? [] : JSON.parse(listaSalva);
-            maquinario.id = maquinario.length + 1;
-            maquinario.push(maquinario);
-            localStorage.setItem('maquinario', JSON.stringify(maquinario))
-
-            setshowMensagem(true)
+            const maquinario = listaSalva ? JSON.parse(listaSalva) : [];
+            const novoId = maquinario.length + 1; // Gere um novo ID
+        
+            const novoMaquinario = {
+              id: novoId, // Atribua o novo ID
+              modelo: form.modelo.value,
+              placa: form.placa.value,
+              ano: form.ano.value,
+            };
+        
+            maquinario.push(novoMaquinario);
+            localStorage.setItem('maquinario', JSON.stringify(maquinario));
+        
+            setshowMensagem(true);
+          }
+          setValidated(true);
         }
-        setValidated(true)
-    }
     return (
 <>
         <Container className='form-colab'>
@@ -139,7 +146,7 @@ function Maquinario() {
                                             required
                                             value={modelo}
                                             isInvalid={!!errors.modelo}
-                                            onChange={hadleModelo}
+                                            onChange={handleModelo}
                                             name="modelo"
                                         />
                                         <Form.Control.Feedback type="invalid">
@@ -195,10 +202,16 @@ function Maquinario() {
                                     </Col>
                                 </Form.Group>
                             </Col>
-                            <Alert className="alert-success-custom" variant='sucess' show={showMensagem}> <b> <FaCheckCircle></FaCheckCircle> </b>Colaborador Cadastrado com Sucesso!</Alert>
+                            <Alert className="alert-success-custom" variant='sucess' show={showMensagem}> <b> <FaCheckCircle></FaCheckCircle> </b>Maquinário Cadastrado com Sucesso!</Alert>
+                        <Container className="custom-table-container mx-0">
+                                <Alert variant="danger" show={showAlertExcluir}>
+                                    Cadastro excluído com sucesso!
+                                </Alert>
+                                    <Table striped bordered hover className="table mt-5 custom-table">
+                                        {/* ... */}
+                                    </Table>
+                        </Container>
                         </Row>
-
-
                         <Col className='row justify-content-center'>
                             <Col className='col-auto'>
                                 <Button type="submit" variant='sucess m-1' className="btn btn-success btn-lg me-2">Cadastrar</Button>
@@ -241,10 +254,7 @@ function Maquinario() {
                 </Table>
             </Container>
         </Container>
-        
         </>
 );
-
-
 }
 export default Maquinario;
