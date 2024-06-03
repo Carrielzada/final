@@ -65,6 +65,10 @@ const router = createBrowserRouter(
         {
           path: '/Maquinario',
           element: <Maquinario></Maquinario>
+        },
+        {         
+          path:'/maquinario/:idMaquinario',
+          element:<Maquinario></Maquinario>       
         }
       ]
     }
