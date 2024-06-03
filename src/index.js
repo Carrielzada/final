@@ -29,23 +29,25 @@ const router = createBrowserRouter(
           path:'/Componentes',
           element:<Home></Home>
         },
-
         {
           path:'/AtivSustentaveis',
           element:<CadAtivSust></CadAtivSust>
         },
 
         {
+          path:'/AtivSustentaveis/:idAtividade',
+          element:<CadAtivSust></CadAtivSust>
+        },
+        {
           path:'/Beneficiarios',
           element:<Beneficiarios></Beneficiarios>
         },
-
         {
-          path:'/Colaboradores',
+          path:'/Colaborador',
           element:<FormColab></FormColab>
         },
         {         
-          path:'/colaboradores/:idColaborador',
+          path:'/colaborador/:idColaborador',
           element:<FormColab></FormColab>       
         },
         {

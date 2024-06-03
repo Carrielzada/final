@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import './AgendarCss/PersonalizarAgendamentos.css';
-import Search from "./AgendarCss/Search";
 
 function PersonalizarAgendamentos() {
     
@@ -22,6 +21,7 @@ function PersonalizarAgendamentos() {
     }
 
     return (
+        
         <Container className="container">
             <Card className="mt-4"> 
                 <h1 id="titulo">Visualizar Agendamento</h1>
