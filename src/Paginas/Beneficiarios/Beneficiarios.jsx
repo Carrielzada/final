@@ -41,7 +41,7 @@ function Beneficiarios() {
     }
     setListaBeneficiarios(dados);
   };
-
+  
   const handleFiltrar = async () => {
     await listarBeneficiarios(searchName);
     setMostrarTabela(true);

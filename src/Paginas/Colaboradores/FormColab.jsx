@@ -605,6 +605,7 @@ function FormColab() {
 
 
                 <Container className="custom-table-container mx-0">
+                
                     <Col>
                         <div className="mt-5 d-flex">
                             <FormLabel className="pesquise-label">Pesquise</FormLabel>

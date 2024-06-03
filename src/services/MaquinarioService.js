@@ -75,10 +75,15 @@ class MaquinarioService {
         try {
             const response = await fetch(`${API_BASE_URL}/maquinario/${idMaquinario}`, {
                 method: 'DELETE',
-            })
+            });
+    
             if (!response.ok) {
-                console.log('ocorreu um erro ao deletar')
-                throw new Error('Erro ao Deletar maquinário!')
+                console.log('ocorreu um erro ao deletar');
+                throw new Error('Erro ao Deletar maquinário!');
+            } else {
+                // Exclusão bem-sucedida
+                // Você pode retornar a resposta do backend, se necessário
+                return response;
             }
         } catch (error) {
             throw error;
