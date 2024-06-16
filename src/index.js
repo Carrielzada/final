@@ -4,15 +4,14 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 import './index.css';
 import App from './App';
 import CadAtivSust from './Paginas/AtivSustentaveis/CadAtivSust';
-import AgendarServicos from './Paginas/Agendar/AgendarServicos';
-import VisualizarAgendamentos from './Paginas/Agendar/VisualizarAgendamentos';
-import PersonalizarAgendamentos from './Paginas/Agendar/PersonalizarAgendamentos';
 import Beneficiarios from './Paginas/Beneficiarios/Beneficiarios';
 import FormColab from './Paginas/Colaboradores/FormColab';
-import Maquinario from './Paginas/Maquinario/Maquinario'
+import Maquinario from './Paginas/Maquinario/Maquinario';
 import reportWebVitals from './reportWebVitals';
 import NavBar from './Componentes/NavBar';
 import Home from './Componentes/Home';
+import CadTiposServ from './Paginas/TiposDeServico/CadTiposServ';
+import CadTipoMaq from './Paginas/TipoMaquinario/CadTipoMaq';
 
 const router = createBrowserRouter(
   [
@@ -29,6 +28,7 @@ const router = createBrowserRouter(
           path:'/Componentes',
           element:<Home></Home>
         },
+
         {
           path:'/AtivSustentaveis',
           element:<CadAtivSust></CadAtivSust>
@@ -38,10 +38,12 @@ const router = createBrowserRouter(
           path:'/AtivSustentaveis/:idAtividade',
           element:<CadAtivSust></CadAtivSust>
         },
+
         {
           path:'/Beneficiarios',
           element:<Beneficiarios></Beneficiarios>
         },
+
         {
           path:'/Colaborador',
           element:<FormColab></FormColab>
@@ -51,16 +53,12 @@ const router = createBrowserRouter(
           element:<FormColab></FormColab>       
         },
         {
-          path: '/AgendarServicos',
-          element: <AgendarServicos></AgendarServicos>
+          path: '/TiposDeMaquinario',
+          element: <CadTipoMaq></CadTipoMaq>
         },
-        {
-          path: '/VisualizarAgendamentos',
-          element: <VisualizarAgendamentos></VisualizarAgendamentos>
-        },
-        {
-          path: '/PersonalizarAgendamentos',
-          element: <PersonalizarAgendamentos></PersonalizarAgendamentos>
+        {         
+          path:'/TiposDeMaquinario/:idTiposDeMaquinario',
+          element:<CadTipoMaq></CadTipoMaq>       
         },
         {
           path: '/Maquinario',
@@ -69,6 +67,14 @@ const router = createBrowserRouter(
         {         
           path:'/maquinario/:idMaquinario',
           element:<Maquinario></Maquinario>       
+        },
+        {         
+          path:'/TiposDeServico',
+          element:<CadTiposServ></CadTiposServ>     
+        },
+        {         
+          path:'/TiposDeServico/:idServico',
+          element:<CadTiposServ></CadTiposServ>     
         }
       ]
     }

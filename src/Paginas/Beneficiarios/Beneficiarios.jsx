@@ -13,12 +13,12 @@ import {
   FaListAlt,
   FaEdit,
   FaSearch,
-  FaBackspace,
   FaTrashAlt,
   FaList,
 } from "react-icons/fa";
 import BeneficiariosForm from "./BeneficiariosForm";
 import BeneficiarioService from "../../services/BeneficiarioService";
+import "./Beneficiarios.css";
 
 const beneficiarioService = new BeneficiarioService();
 
@@ -39,9 +39,11 @@ function Beneficiarios() {
     } else {
       dados = await beneficiarioService.obterTodosBeneficiarios();
     }
+    // Ordenar os dados por nome
+    dados.sort((a, b) => a.nome.localeCompare(b.nome));
     setListaBeneficiarios(dados);
   };
-  
+
   const handleFiltrar = async () => {
     await listarBeneficiarios(searchName);
     setMostrarTabela(true);
@@ -78,12 +80,12 @@ function Beneficiarios() {
 
   return (
     <>
-      <h2 className="text-center mt-4">
-        <FaListAlt /> Gerenciar Beneficiários
+      <h2 className="text-center">
+        <FaListAlt /> CADASTRO DE BENEFICIÁRIOS
       </h2>
       <Container>
         <Card>
-          <Card.Header>Cadastro Beneficiários</Card.Header>
+          <Card.Header as="h4">Informações Pessoais:</Card.Header>
           <Card.Body>
             <Row>
               <Col>
@@ -97,39 +99,47 @@ function Beneficiarios() {
         </Card>
       </Container>
       <hr />
-      <h3 className="text-center">Beneficiários Cadastrados</h3>
-      
-      <Container>
-        <Form className="d-flex justify-content-center mb-3">
+      <h3 className="text-center mt-4">Beneficiários Cadastrados</h3>
+
+      <Container className="mt-4">
+        <Form className="d-flex justify-content-center mb-4">
           <InputGroup>
             <Form.Control
               type="text"
               placeholder="Pesquisar por nome"
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
+              className="dark-gray-border"
             />
-            <Button variant="primary" onClick={handleFiltrar}>
-              <FaSearch /> Pesquisar
+            <Button
+              variant="outline-secondary"
+              onClick={handleFiltrar}
+              disabled={searchName === ""}
+            >
+              <FaSearch style={{ color: "#666666" }} />
             </Button>
-            <Button variant="secondary" onClick={() => setSearchName("")}>
-              <FaBackspace /> Limpar
-            </Button>
+            
             <Button variant="secondary" onClick={handleListarTodos}>
-              <FaList /> ListarTodos
+              <FaList /> Listar Todos
             </Button>
           </InputGroup>
         </Form>
         {mostrarTabela && (
-          <Table striped bordered hover className="mt-3">
+          <Table
+            striped
+            bordered
+            hover
+            className="mt-3 dark-gray-bordered-table small-font-table"
+          >
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Contato</th>
-                <th>E-mail</th>
-                <th>Endereço</th>
-                <th>Bairro</th>
+                <th className="text-center">ID</th>
+                <th className="text-center">Nome</th>
+                <th className="text-center">CPF</th>
+                <th className="text-center">Contato</th>
+                <th className="text-center">E-mail</th>
+                <th className="text-center">Endereço</th>
+                <th className="text-center">Bairro</th>
                 <th className="text-center">Número</th>
                 <th className="text-center">Data de Nascimento</th>
                 <th className="text-center">Ações</th>
@@ -138,7 +148,7 @@ function Beneficiarios() {
             <tbody>
               {filteredBeneficiaries.map((beneficiary, index) => (
                 <tr key={index}>
-                  <td>{beneficiary.id}</td>
+                  <td className="text-center">{beneficiary.id}</td>
                   <td>{beneficiary.nome}</td>
                   <td>{beneficiary.cpf}</td>
                   <td>{beneficiary.contato}</td>

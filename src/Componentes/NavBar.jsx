@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './NavBar.css';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { FaClipboard, FaBars, FaHome } from 'react-icons/fa';
+import { FaClipboard, FaClipboardList, FaRegUser, FaUserPlus, FaBars, FaHome, FaTractor, FaCogs } from 'react-icons/fa';
 import { Container } from 'react-bootstrap';
 import Footer from '../Componentes/Footer.jsx';
 
@@ -15,7 +15,6 @@ function NavBar() {
         setShow(!show);
     };
 
-    // Verifica se a página atual é a Home
     React.useEffect(() => {
         setIsHome(location.pathname === '/Componentes');
     }, [location.pathname]);
@@ -24,53 +23,51 @@ function NavBar() {
         <>
             <div className={`side-navbar ${show ? 'active-nav' : ''}`} id="sidebar">
                 <ul className="nav flex-column text-white w-100 p-8">
-                    <span className="nav-link h3 text-black mt-4 mb-0 fw-bold fs-2 pb-0 text-center italic-text text-shadow">ECOGEST</span>
-                    <span className="nav-link h1 text-black my-0 pt-0 text-center">Inovando o Presente, Preservando o Futuro</span>
+                    <span className="nav-link h3 text-black mt-4 mb-0 fw-bold fs-1  pb-0 text-center italic-text text-shadow ecogest">ECOGEST</span>
+                    <span className="nav-link h1 text-black mb-4 pt-0 fs-6 text-center">Inovando o Presente, Preservando o Futuro</span>
                     <li className="nav-link px-2 py-3">
                         <Link to="/Componentes">
                             <FaHome />
                             <span className="mx-2">Home</span>
                         </Link>
-                    </li>
-                    <li className='nav-link px-2 py-3'>
-                        <Link to="/AgendarServicos">
-                        <FaClipboard />
-                        <span className="mx-2">Agendar Serviços</span></Link>
-                    </li>
-                    <li className='nav-link px-2 py-3'>
-                        <Link to="/PersonalizarAgendamentos">
-                        <FaClipboard />
-                        <span className="mx-2">Visualizar Agendamentos</span></Link>
-                    </li>
-                    <li className='nav-link px-2 py-3'>
-                        <Link to="/VisualizarAgendamentos">
-                        <FaClipboard />
-                        <span className="mx-2">Personalizar Agendamento</span></Link>
-                    </li>
+                    </li>                    
                     <li className="nav-link px-2 py-3">
                         <Link to="/AtivSustentaveis">
-                            <FaClipboard />
+                            <FaClipboardList />
                             <span className="mx-2">Cadastrar Ativ. Sustentável</span>
                         </Link>
                     </li>
                     <li className="nav-link px-2 py-3">
+                        <Link to="/TiposDeServico">
+                            <FaCogs />
+                            <span className="mx-2">Cadastrar Tipos de Serviços</span>
+                        </Link>
+                    </li>
+                    <li className="nav-link px-2 py-3">
                         <Link to="/Beneficiarios">
-                            <FaClipboard />
+                            <FaRegUser />
                             <span className="mx-2">Cadastro de Beneficiarios</span>
                         </Link>
                     </li>
                     <li className="nav-link px-2 py-3">
                         <Link to="/Colaborador">
-                            <FaClipboard />
+                            <FaUserPlus />
                             <span className="mx-2">Cadastro de Colaboradores</span>
                         </Link>
                     </li>
                     <li className="nav-link px-2 py-3">
+                        <Link to="/TiposDeMaquinario">
+                            <FaTractor />
+                            <span className="mx-2">Cadastrar Tipos de Maquin.</span>
+                        </Link>
+                    </li>
+                    <li className="nav-link px-2 py-3">
                         <Link to="/Maquinario">
-                            <FaClipboard />
+                            <FaTractor />
                             <span className="mx-2">Cadastro de Maquinário</span>
                         </Link>
                     </li>
+
                 </ul>
             </div>
 
@@ -81,8 +78,9 @@ function NavBar() {
                 </nav>
                 <Container className={`main-container ${isHome ? '' : 'bg-white'} p-2 rounded-5 mb-5`}>
                     <Outlet />
-                    <Footer className="main-footer p-2"></Footer>
+                    
                 </Container>
+                <Footer className="main-footer p-2"></Footer>
             </div>
         </>
     );

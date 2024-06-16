@@ -3,54 +3,63 @@ import { Button, Card, Col, Row, Form, Container, Table, Alert } from 'react-boo
 import { FaListAlt, FaSearch, FaTrashAlt, FaEdit, FaBackspace, FaCheckCircle, FaTimes } from 'react-icons/fa';
 import BtnCadastrar from '../../Componentes/BtnCadastrar.jsx';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import AtividadeService from '../../services/AtividadeService';
-const atividadeService = new AtividadeService();
+import TipoMaquinarioService from '../../services/TipoMaquinarioService.js';
 
-function CadAtivSust() {
-    const [listaAtividades, setListaAtividades] = useState(null);
+const tipoMaquinarioService = new TipoMaquinarioService();
+
+function CadTipoMaq() {
+    const [listaTipoMaq, setListaTipoMaq] = useState([]);
     const [sucessoMensagem, setSucessoMensagem] = useState('');
-    const [editandoAtividade, setEditandoAtividade] = useState(null);
+    const [editandoTipoMaq, setEditandoTipoMaq] = useState(null);
     const [erro, setErro] = useState('');
     const navigate = useNavigate();
     const [validated, setValidated] = useState(false);
     const [nome, setNome] = useState('');
     const [errors, setErrors] = useState({});
     const [termoBusca, setTermoBusca] = useState('');
-    const { idAtividade } = useParams();
+    const { idTiposMaq } = useParams();
 
     const handleBuscaChange = (event) => {
         setTermoBusca(event.target.value);
     };
 
     const handleFiltrar = async () => {
-        await listarAtividades(termoBusca);
+        await listarTipoMaq(termoBusca);
     };
 
-    const listarAtividades = async (termoBusca) => {
+    const listarTipoMaq = async (termoBusca) => {
         let dados = [];
         if (termoBusca) {
-            dados = await atividadeService.filtrar(termoBusca);
-            setListaAtividades(dados);
+            dados = await tipoMaquinarioService.filtrar(termoBusca);
+            setListaTipoMaq(dados);
         } else {
-            dados = await atividadeService.obterTodos();
-            setListaAtividades(dados);
+            dados = await tipoMaquinarioService.obterTodos();
+            setListaTipoMaq(dados);
         }
     };
 
     const handleLimpar = () => {
-        setListaAtividades(null);
+        setListaTipoMaq([]);
         setTermoBusca('');
     };
 
     useEffect(() => {
-        if (idAtividade) {
-            const obterAtividade = async () => {
-                const dados = await atividadeService.obterPorId(idAtividade);
+        if (idTiposMaq) {
+            const obterTipoMaq = async () => {
+                const dados = await tipoMaquinarioService.obterPorId(idTiposMaq);
                 setNome(dados.nome);
             };
-            obterAtividade();
+            obterTipoMaq();
         }
-    }, [idAtividade]);
+    }, [idTiposMaq]);
+
+    useEffect(() => {
+        const obterTodosTiposMaq = async () => {
+            const dados = await tipoMaquinarioService.obterTodos();
+            setListaTipoMaq(dados);
+        };
+        obterTodosTiposMaq();
+    }, []);
 
     const handleNomeChange = (e) => {
         const value = e.target.value;
@@ -64,8 +73,8 @@ function CadAtivSust() {
         let error = '';
         if (!value) {
             error = 'O Nome não pode estar vazio.';
-        } else if (value.length < 20) {
-            error = 'O Nome deve ter no mínimo 20 caracteres.';
+        } else if (value.length < 4) {
+            error = 'O Nome deve ter no mínimo 5 caracteres.';
         } else if (value.length > 100) {
             error = 'O Nome não pode ter mais de 100 caracteres.';
         }
@@ -81,25 +90,25 @@ function CadAtivSust() {
             return;
         }
 
-        const atividade = {
-            id: idAtividade || 0,
+        const tiposMaq = {
+            id: editandoTipoMaq ? editandoTipoMaq.id : 0,
             nome: nome,
         };
 
-        if (!idAtividade) {
-            await atividadeService.adicionar(atividade);
-            setSucessoMensagem('Atividade cadastrada com sucesso!');
+        if (!editandoTipoMaq) {
+            await tipoMaquinarioService.adicionar(tiposMaq);
+            setSucessoMensagem('Serviço cadastrado com sucesso!');
         } else {
-            await atividadeService.atualizar(idAtividade, atividade);
-            setSucessoMensagem('Atividade atualizada com sucesso!');
+            await tipoMaquinarioService.atualizar(editandoTipoMaq.id, tiposMaq);
+            setSucessoMensagem('Serviço atualizado com sucesso!');
         }
 
         setNome('');
         setErrors({});
-        navigate('/AtivSustentaveis'); 
-        setEditandoAtividade(null);
-        if (listaAtividades !== null) {
-            await listarAtividades(termoBusca);
+        setEditandoTipoMaq(null);
+        navigate('/TiposDeMaquinario');
+        if (listaTipoMaq !== null) {
+            await listarTipoMaq(termoBusca);
         }
         setTimeout(() => {
             setSucessoMensagem('');
@@ -108,43 +117,44 @@ function CadAtivSust() {
 
     const handleExcluir = async (id) => {
         if (window.confirm('Tem certeza que deseja excluir?')) {
-            await atividadeService.excluir(id);
-            setSucessoMensagem('Atividade excluída com sucesso!');
-            await listarAtividades();
+            await tipoMaquinarioService.excluir(id);
+            setSucessoMensagem('Serviço excluído com sucesso!');
+            await listarTipoMaq();
             setTimeout(() => {
                 setSucessoMensagem('');
             }, 3000);
         }
     };
 
-    const handleEditar = (atividade) => {
-        setNome(atividade.nome);
-        setEditandoAtividade(atividade);
+    const handleEditar = (tiposMaq) => {
+        setNome(tiposMaq.nome);
+        setEditandoTipoMaq(tiposMaq);
+        navigate(`/TiposDeMaquinario/${tiposMaq.id}`);
     };
 
     const handleCancelar = () => {
         setNome('');
-        setEditandoAtividade(null);
+        setEditandoTipoMaq(null);
         setErro('');
-        navigate('/AtivSustentaveis');
+        navigate('/TiposDeMaquinario');
     };
 
     return (
         <>
             <div className="bg-white p-0 rounded shadow w-100" style={{ minHeight: '90vh' }}>
-                <h2 className="text-center mb-4"><FaListAlt /> CADASTRO DE ATIVIDADE SUSTENTÁVEL</h2>
+                <h2 className="text-center mb-4"><FaListAlt /> CADASTRO DE TIPOS DE MAQUINÁRIO</h2>
                 <Container className='mt-2'>
                     <Card>
                         <Card.Header as="h4">
                             <Row className="align-items-center">
-                                <Col lg={2}>Atividades:</Col>
+                                <Col lg={2}>Tipos de Maquinário:</Col>
                                 <Col lg={6}>
                                     <Form.Group className='mb-0'>
                                         <Form.Control
                                             className="border-secondary"
                                             type="text"
                                             onChange={handleBuscaChange}
-                                            placeholder="Pesquise o Nome da Atividade Sustentável"
+                                            placeholder="Pesquise o Nome do Tipo de Maquinário"
                                             value={termoBusca}
                                         />
                                     </Form.Group>
@@ -169,7 +179,7 @@ function CadAtivSust() {
                                             <Form.Control
                                                 type="text"
                                                 className={`${errors.nome ? 'is-invalid' : 'border-secondary'}`}
-                                                placeholder="Digite uma nova atividade..."
+                                                placeholder="Digite um novo serviço..."
                                                 required
                                                 value={nome}
                                                 isInvalid={!!errors.nome}
@@ -182,13 +192,13 @@ function CadAtivSust() {
                                     </Col>
                                     <Col lg={2}>
                                         <BtnCadastrar
-                                            editandoAtividade={editandoAtividade}
+                                            editandoTipoMaq={editandoTipoMaq}
                                             handleEditar={handleEditar}
                                             handleCancelar={handleCancelar}
                                         />
                                     </Col>
                                     <Col lg={2}>
-                                        {editandoAtividade && (
+                                        {editandoTipoMaq && (
                                             <Button className='btn w-100' variant='danger' onClick={handleCancelar}>
                                                 <FaTimes /> Cancelar
                                             </Button>
@@ -207,36 +217,35 @@ function CadAtivSust() {
                 
                 <Container className="mt-2">
                     <Card>
-                        <Card.Header as="h5">Atividades Cadastradas</Card.Header>
+                        <Card.Header as="h5">Tipos de Maquinários Cadastrados</Card.Header>
                         <Card.Body>
-                            {listaAtividades !== null && (
+                            {listaTipoMaq !== null && (
                                 <Table className='border-success mt-2'>
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th colSpan={3}>Nome da Atividade</th>
+                                            <th colSpan={3}>Nome do Tipo de Maquinário</th>
                                             <th colSpan={2} className='text-center'>Editar</th>
                                             <th colSpan={2} className='text-center'>Excluir</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {listaAtividades.length <= 0 ? (
+                                        {listaTipoMaq.length <= 0 ? (
                                             <tr>
                                                 <td colSpan="3" className="text-center">Nenhum item para listar</td>
                                             </tr>
                                         ) : (
-                                            listaAtividades.map((atividade) => (
-                                                <tr key={atividade.id}>
-                                                    <td>{atividade.id}</td>
-                                                    <td colSpan={3}>{atividade.nome}</td>
+                                            listaTipoMaq.map((tiposMaq) => (
+                                                <tr key={tiposMaq.id}>
+                                                    <td>{tiposMaq.id}</td>
+                                                    <td colSpan={3}>{tiposMaq.nome}</td>
                                                     <td colSpan={2} className='text-center'>
-                                                        <Link to={`${atividade.id}`} className="btn-primary m-1" onClick={() => handleEditar(atividade)}>
+                                                        <Link to="#" className="btn-primary m-1" onClick={() => handleEditar(tiposMaq)}>
                                                             <FaEdit />
                                                         </Link>
-                                                        
                                                     </td>
                                                     <td colSpan={2} className='text-center'>
-                                                        <Link className="text-danger text" onClick={() => handleExcluir(atividade.id)}>
+                                                        <Link to="#" className="text-danger text" onClick={() => handleExcluir(tiposMaq.id)}>
                                                             <FaTrashAlt />
                                                         </Link>
                                                     </td>
@@ -254,4 +263,4 @@ function CadAtivSust() {
     );
 }
 
-export default CadAtivSust;
+export default CadTipoMaq;
