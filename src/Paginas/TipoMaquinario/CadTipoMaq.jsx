@@ -97,10 +97,10 @@ function CadTipoMaq() {
 
         if (!editandoTipoMaq) {
             await tipoMaquinarioService.adicionar(tiposMaq);
-            setSucessoMensagem('Serviço cadastrado com sucesso!');
+            setSucessoMensagem('Tipo de Maquinário cadastrado com sucesso!');
         } else {
             await tipoMaquinarioService.atualizar(editandoTipoMaq.id, tiposMaq);
-            setSucessoMensagem('Serviço atualizado com sucesso!');
+            setSucessoMensagem('Tipo de Maquinário atualizado com sucesso!');
         }
 
         setNome('');
@@ -118,7 +118,7 @@ function CadTipoMaq() {
     const handleExcluir = async (id) => {
         if (window.confirm('Tem certeza que deseja excluir?')) {
             await tipoMaquinarioService.excluir(id);
-            setSucessoMensagem('Serviço excluído com sucesso!');
+            setSucessoMensagem('Excluído com sucesso!');
             await listarTipoMaq();
             setTimeout(() => {
                 setSucessoMensagem('');
@@ -179,7 +179,7 @@ function CadTipoMaq() {
                                             <Form.Control
                                                 type="text"
                                                 className={`${errors.nome ? 'is-invalid' : 'border-secondary'}`}
-                                                placeholder="Digite um novo serviço..."
+                                                placeholder="Digite um novo tipo de maquinário..."
                                                 required
                                                 value={nome}
                                                 isInvalid={!!errors.nome}
